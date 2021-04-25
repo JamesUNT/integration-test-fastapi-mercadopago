@@ -3,7 +3,7 @@ import google.cloud.logging
 from fastapi import FastAPI
 
 
-cliente = google.cloud.logging.Client()
+client = google.cloud.logging.Client()
 client.get_default_handler()
 client.setup_logging()
 
