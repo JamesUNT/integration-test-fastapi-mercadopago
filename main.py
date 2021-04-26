@@ -17,5 +17,5 @@ def read_root():
 
 @app.post("/notifications")
 def post_payment(topic: str, id: int):
-    logging.warning()
+    logging.warning(f"topic: {topic}\nid: {id}")
     return {"topic": topic, "id": id}
