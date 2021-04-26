@@ -1,18 +1,22 @@
 from typing import Optional
-import google.cloud.logging
-from fastapi import FastAPI
 
+import requests
+
+from fastapi import FastAPI
+import google.cloud.logging
 
 client = google.cloud.logging.Client()
 client.get_default_handler()
 client.setup_logging()
-
 app = FastAPI()
 
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+@app.get("/{id}")
+def read_id(id: str):
+    order_response = requests.get("https://api.mercadopago.com/merchant_orders/" + id)
+    logging.warning(order_response.text)
+    payment_response = requests.get("https://api.mercadopago.com/v1/payments/" + id)
+    logging.warning(payment_response.text)
 
 
 @app.post("/notifications")
